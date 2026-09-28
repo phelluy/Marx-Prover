@@ -2,20 +2,28 @@
 
 [Introduction](Introduction.md)
 
-Train agents to build a harness for each problem, choosing roles, tools, task decomposition, and communication.
+Fine-tune one model through the experience of a [swarm of its copies](Organization.md). Coordination, tool use, and proving belong to the same learned behavior.
 
 ## Data and SFT
 
-Run a larger teacher, e.g. [DeepSeek V4.1 Flash](https://api-docs.deepseek.com/news/news260910/), as collaborating agents in the minimal environment.
+Run copies of a larger teacher, e.g. [DeepSeek V4.1 Flash](https://api-docs.deepseek.com/news/news260910/), as a swarm in the minimal environment.
 
-Record how the agents organize, write scripts, exchange messages, and complete proofs. Keep verified examples across difficulty levels, including solutions needing almost no setup. Train each student from its agent's observations.
+Record how the copies organize, write scripts, exchange messages (*WIP: how to implement it?*), and complete proofs. 
 
-**SFT supplies a few collaborative examples to warm up RL.**
+**SFT supplies collaborative examples to warm up RL.**
 
 ## RL
 
-Give agents a problem and a budget. They organize, attempt a proof, and adjust their approach. Use the team's proof success to train organization decisions; setup, messages, and proving share the budget.
+For each rollout, run copies of the current student checkpoint on a shared problem and budget. They organize, prove, and revise their approach together.
+
+Compare [credit assignment methods](Learning-signal.md) and measure the benefit of interaction through [controlled experiments](Experimental-controls.md).
 
 Easy problems should need almost no initialization. Harder problems may justify more setup when it improves success. This tradeoff should emerge from training.
 
-[MAGRPO and centralized-critic methods](Related-work.md) provide candidate learning algorithms.
+## Curriculum
+
+Start with problems and verified subgoals the student sometimes solves. Mix these with harder tasks; adjust sampling as success rates change. Add teacher examples when rewards become too sparse.
+
+[Prioritized Level Replay](Related-work.md) is a starting point for adaptive sampling.
+
+**WIP:** training problem source; difficulty sampling rule; use of intermediate rewards; when to add fresh teacher data. Keep evaluation problems and their generated traces excluded.

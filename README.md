@@ -1,5 +1,5 @@
 # Marx-Prover
 
-Research notes on training LLM agents to organize themselves for formal proof.
+Research notes on fine-tuning a language model so a swarm of its copies learns to self-organize for formal proofs.
 
 Start with the [introduction](Introduction.md).
